@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String?
+  name      String?
+  image     String?
+  resumes   Resume[]
+  jobs      Job[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Resume {
+  id         String                     @id @default(cuid())
+  userId     String
+  fileName   String
+  fileUrl    String
+  parsedText String                     @db.Text // extracted plain text from PDF/DOCX
+  embedding  Unsupported("vector(1536)")?  // OpenAI text-embedding-3-small (1536 dimensions)
+  createdAt  DateTime                   @default(now())
+  user       User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+}
+
+model Job {
+  id          String                     @id @default(cuid())
+  userId      String
+  company     String
+  position    String
+  description String                     @db.Text
+  status      JobStatus                  @default(APPLIED)
+  deadline    DateTime?
+  appliedDate DateTime                   @default(now())
+  notes       String?                    @db.Text
+  embedding   Unsupported("vector(1536)")?  // OpenAI embedding for job description
+  matchScore  Int?                       // AI score (0-100)
+  suggestions String?                    @db.Text // AI feedback
+  createdAt   DateTime                   @default(now())
+  updatedAt   DateTime                   @updatedAt
+  user        User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([status])
+}
+
+enum JobStatus {
+  APPLIED
+  INTERVIEW
+  OFFER
+  REJECTED
+}
+

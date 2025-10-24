@@ -1,0 +1,12 @@
+# Vercel ignore file
+node_modules
+.env
+.env.local
+.git
+*.md
+!README.md
+prisma/migrations/*.sql
+test-*.js
+verify-*.js
+
+
