@@ -214,6 +214,17 @@ This is a personal project, but suggestions and feedback are welcome!
 
 ISC
 
+## 📚 Documentation
+
+For detailed documentation, guides, and project information, see the [`/docs`](./docs) folder:
+
+- [Setup Guide](./docs/SETUP.md) - Complete setup instructions
+- [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md) - Deploy to Vercel
+- [Features Guide](./docs/FEATURES_GUIDE.md) - Complete features documentation
+- [Portfolio Guide](./docs/PORTFOLIO_PRESENTATION.md) - For showcasing this project
+- [Security Audit](./docs/SECURITY_AUDIT.md) - Security review report
+- [View All Documentation](./docs/README.md)
+
 ## 🙏 Acknowledgments
 
 - Next.js team for the amazing framework
